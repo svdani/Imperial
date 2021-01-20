@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Registro Rebelde</title>
+</head>
+<body>
+	<h3>Registro Rebelde</h3>
+	<pre>Ejemplo:"rebelde dani en tatooine a las 13-01-2021 20:00"</pre>
+	<input type="text" id="myText" value="">
+	
+	<p>Haga click para registrar rebelde</p>
+	
+	<button onclick="myFunction()">Registra</button>
+	
+	<br>
+	<a href="http://localhost:8080/api">Ver Lista Rebeldes</a>
+	 <p id="demo"></p>
+	<script>
+	function myFunction() {
+	  
+		var x = document.getElementById("myText").value;
+		var arrayCadena = x.split(" ");
+		var nombre = arrayCadena[1];
+		var planeta = arrayCadena[3];
+		var fechayhora = arrayCadena[6] + " " + arrayCadena[7];
+		
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+		
+		var raw = JSON.stringify({"nombre": nombre,"planeta": planeta,"fechayhora": fechayhora});
+		
+		var requestOptions = {
+		  method: 'POST',
+		  headers: myHeaders,
+		  body: raw,
+		  contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		  redirect: 'follow'
+		};
+		
+		fetch("http://localhost:8080/api", requestOptions)
+		  .then(response => response.text())
+		  .then(result => console.log(result))
+		  .catch(error => console.log('error', error));
+		}
+	</script>
+</body>
+</html>
